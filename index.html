@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Адвент-календарь 🎄</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        color: #fff;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .container {
+        text-align: center;
+        max-width: 500px;
+        padding: 24px;
+      }
+
+      h1 {
+        margin-bottom: 8px;
+      }
+
+      .days {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      button {
+        padding: 16px 0;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        background: #ffffff22;
+        color: #fff;
+        transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+      }
+
+      button:hover:not(:disabled) {
+        transform: scale(1.1);
+        background: #ffffff44;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      }
+
+      button:hover:not(:disabled) {
+        transform: scale(1.05);
+        background: #ffffff44;
+      }
+
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .message {
+        margin-top: 24px;
+        padding: 16px;
+        background: #00000033;
+        border-radius: 12px;
+        min-height: 60px;
+      }
+
+      .confetti {
+        position: fixed;
+        top: -10px;
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        animation: fall linear forwards;
+        z-index: 9999;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎄 Адвент-календарь для Ирочки</h1>
+      <p>5 дней до Нового года ✨</p>
+
+      <div class="days">
+        <button onclick="openDay(1)">День 1</button>
+        <button onclick="openDay(2)">День 2</button>
+        <button onclick="openDay(3)">День 3</button>
+        <button onclick="openDay(4)">День 4</button>
+        <button onclick="openDay(5)">День 5</button>
+      </div>
+
+      <div class="message" id="message">Нажми на день 💫</div>
+      <audio id="sound" preload="auto"></audio>
+    </div>
+
+    <script>
+      const messages = {
+        1: "🎁 День 1: Ирочка, улыбнись и загадай маленькое желание!🧚🏼‍♀️",
+        2: "☕ День 2: Иришка, выпей что-то вкусное и тёплое!",
+        3: "🎶 День 3: Ирусик, включи новогоднюю песню!",
+        4: "💌 День 4: Иринка, напиши кому-нибудь тёплое сообщение!",
+        5: "🎉 День 5: ИРИНА НУ ЁП ТВОЮ МАТЬ, с наступающим Новым годом! 🎄✨",
+      };
+
+      function openDay(day) {
+        const sound = document.getElementById("sound");
+        sound.src =
+          "Ira's AC/music/christmas-music-box-tannenbaum_fyedmbv_.mp3";
+        // "C:/Users/Yulya/Downloads/christmas-music-box-tannenbaum_fyedmbv_.mp3";
+        sound.play().catch(() => {});
+
+        document.getElementById("message").textContent = messages[day];
+
+        if (day === 5) {
+          launchMegaConfetti();
+        } else {
+          launchConfetti();
+        }
+      }
+
+      function launchConfetti() {
+        for (let i = 0; i < 30; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.backgroundColor = `hsl(${
+            Math.random() * 360
+          }, 100%, 50%)`;
+          confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 4000);
+        }
+      }
+
+      function launchMegaConfetti() {
+        for (let i = 0; i < 150; i++) {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti";
+          confetti.style.left = Math.random() * 100 + "vw";
+          confetti.style.width = confetti.style.height =
+            6 + Math.random() * 10 + "px";
+          confetti.style.backgroundColor = `hsl(${
+            Math.random() * 360
+          }, 100%, 50%)`;
+          confetti.style.animationDuration = 3 + Math.random() * 3 + "s";
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 6000);
+        }
+        confetti.style.animationDuration = 2 + Math.random() * 2 + "s";
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 4000);
+      }
+    </script>
+  </body>
+</html>
